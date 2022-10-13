@@ -5,7 +5,6 @@ namespace ConsoleApp1
     internal class Program
     {
         static string alphabet = "ABCDEF";
-        static string alphabet2pol = "GHIJKLMNOPQRSTUVWXYZ";
 
         static void Main(string[] args)
         {
@@ -38,9 +37,10 @@ namespace ConsoleApp1
                 Console.WriteLine("Введите нужное число для перевода.");
                 string number = Console.ReadLine();
                 bool checkNumber = true;
+                int? temp = null;
                 for (int i = 0; i < number.Length; i++)
                 {
-                    string s = number[i].ToString();
+                    string s = number[i].ToString().ToUpper();
                     if (s == "-")
                     {
                         continue;
@@ -72,18 +72,25 @@ namespace ConsoleApp1
                             s = "15";
                         }
                     }
-                    else if (alphabet2pol.Contains(s))
+
+                    try
                     {
-                        s = "16";
+                        temp = int.Parse(s);
                     }
-                    int temp = int.Parse(s);
+                    catch
+                    {
+                        break;
+                    }
                     if (temp >= start)
                     {
                         checkNumber = false;
                         break;
                     }
                 }
-
+                if (temp == null)
+                {
+                    continue;
+                }
                 if (checkNumber)
                 {
                     if (start == 10 && end != 10)
@@ -93,7 +100,7 @@ namespace ConsoleApp1
                             Console.WriteLine(DesVEnd(number, end));
                             Console.WriteLine(PryamoyKod(DesVEnd(number, end)));
                         }
-                        else 
+                        else
                         { Console.WriteLine(DesVEnd(number, end)); }
                     }
                     if (start != 10 && end == 10)
@@ -151,7 +158,7 @@ namespace ConsoleApp1
             }
             s = s.Replace("-", string.Empty);
 
-            if (otr) 
+            if (otr)
                 result += "1";
             for (int i = 0; i < 8 - s.Length - 1; i++)
             {
@@ -197,7 +204,7 @@ namespace ConsoleApp1
             for (int i = 0; i < numCopy.Length; i++)
             {
                 temp = "";
-                temp += Character(numCopy.Substring(i, 1), "from");
+                temp += Character(numCopy.Substring(i, 1).ToUpper(), "from");
                 calc = (int)Math.Pow(Convert.ToDouble(ss), Convert.ToDouble(numCopy.Length - (i + 1)));
                 newNum += Convert.ToInt32(temp) * calc;
             }
@@ -211,9 +218,9 @@ namespace ConsoleApp1
         {
             string temp = FromNtoDes(number, ssN);
             temp = DesVEnd(temp, ssK);
-            return temp;
+            return
+            temp;
         }
 
     }
 }
-
